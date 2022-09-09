@@ -1,0 +1,56 @@
+$container-max-width: 1140px !default;
+$grid-columns: 12 !default;
+
+$grid-gap: 30px !default;
+$grid-gap-side: $grid-gap / 2 !default;
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+) !default;
+
+
+@mixin container {
+  margin: 0 auto;
+  max-width: $container-max-width;
+  padding-left: $grid-gap-side;
+  padding-right: $grid-gap-side;
+}
+
+@mixin row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -$grid-gap-side;
+  margin-right: -$grid-gap-side;
+
+  > * {
+    margin-left: $grid-gap-side;
+    margin-right: $grid-gap-side;
+  }
+}
+
+@mixin col-auto {
+  flex: 1 0 0%;
+}
+
+@mixin col($size) {
+  flex: 0 0 auto;
+  width: calc(#{percentage($size / $grid-columns)} - #{$grid-gap});
+}
+
+@mixin media($width) {
+    @media (min-width: $width) {
+        @content;
+    }
+}
+
+@mixin bp($name) {
+    $width: map-get($grid-breakpoints, $name);
+    @include media($width) {
+        @content;
+    }
+}
